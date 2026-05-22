@@ -34,7 +34,42 @@ Luego abre en tu navegador:
 
 Para detener: `Ctrl+C` y luego `docker compose down` (agrega `-v` para borrar también la base de datos).
 
-## 3. Cómo correr el experimento
+## 3. Exponer al internet con Cloudflare Tunnel
+
+Para que participantes fuera de tu red local puedan acceder, usa **Cloudflare Tunnel** (no requiere cuenta ni configuración).
+
+### Paso a paso
+
+**Terminal 1 — levanta la app:**
+```bash
+docker compose up --build
+```
+Espera a ver: `[app] escuchando en http://localhost:3000`
+
+**Terminal 2 — abre el túnel:**
+```bash
+docker run --rm --network host cloudflare/cloudflared:latest tunnel --url http://localhost:3000
+```
+En unos segundos aparece una línea como:
+```
+Your quick Tunnel has been created! Visit it at:
+https://nombre-aleatorio.trycloudflare.com
+```
+
+Esa URL es tu endpoint público. Comparte los links así:
+- `https://nombre-aleatorio.trycloudflare.com/n1`
+- `https://nombre-aleatorio.trycloudflare.com/n2`
+- `https://nombre-aleatorio.trycloudflare.com/n3`
+
+> **Importante:** la URL cambia cada vez que reinicias el túnel. Si el experimento dura varias horas, mantén la Terminal 2 abierta. Si se cae, repite el comando — los datos en PostgreSQL se conservan.
+
+### Advertencias
+- Los túneles sin cuenta de Cloudflare no tienen garantía de uptime. Para un experimento corto (1-2 horas) son más que suficientes.
+- El tráfico pasa por los servidores de Cloudflare, pero recuerda que **no se captura ningún dato sensible** — solo eventos `visit`/`submit`.
+
+---
+
+## 4. Cómo correr el experimento (flujo general)
 
 1. Asigna a cada participante un **token anónimo** (p. ej. `U-001`, `U-002`…). Anótalo
    en tu catálogo (ver `docs/01-catalogo-usuarios.md`), nunca su nombre real.
