@@ -3,135 +3,265 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NubeSegura — Alerta de seguridad en tu cuenta</title>
+<title>Alerta de seguridad crítica — Cuenta de Google</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/public/reveal.css">
 <style>
-  :root{--ns-bg:#0a0e1a;--ns-card:#121829;--ns-line:#222b40;--ns-blue:#4f8cff;--ns-blue-d:#2f6bff;--ns-text:#eaf0fb;--ns-dim:#8a96ad;--ns-green:#34c77b}
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Sora',sans-serif;background:var(--ns-bg);color:var(--ns-text)}
-  .fakebar{background:#0f1422;display:flex;align-items:center;gap:10px;padding:8px 14px;font-size:13px;border-bottom:1px solid #1c2333}
-  .dots{display:flex;gap:6px}.dots span{width:10px;height:10px;border-radius:50%;display:block}
-  .dots span:nth-child(1){background:#ff5f56}.dots span:nth-child(2){background:#ffbd2e}.dots span:nth-child(3){background:#27c93f}
-  .urlbox{flex:1;background:#0a0e1a;color:#aeb8cc;border-radius:7px;padding:6px 12px;display:flex;align-items:center;gap:8px;max-width:680px;border:1px solid #1c2333}
-  .urlbox .lock{color:var(--ns-green);font-size:12px}.urlbox .url b{color:#9fc2ff}
-  #bait{min-height:100vh;display:flex;flex-direction:column}
-  .nav{border-bottom:1px solid var(--ns-line);padding:16px 0}
-  .nav-in{max-width:560px;margin:0 auto;padding:0 22px;display:flex;align-items:center;gap:11px}
-  .nav .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--ns-blue),#7b5cff);display:flex;align-items:center;justify-content:center;font-size:16px}
-  .nav .name{font-weight:700;font-size:18px;letter-spacing:-.3px}
-  .nav .name span{color:var(--ns-blue)}
-  .main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:40px 22px}
-  .card{background:var(--ns-card);border:1px solid var(--ns-line);border-radius:16px;max-width:460px;width:100%;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5)}
-  .card-head{padding:26px 28px 0;text-align:center}
-  .shield{width:60px;height:60px;border-radius:50%;background:#3a1f1f;border:1px solid #5a2a2a;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px}
-  .card-head h1{font-size:21px;font-weight:700;margin-bottom:8px;letter-spacing:-.3px}
-  .greet{color:var(--ns-blue);font-weight:600}
-  .card-head p{color:var(--ns-dim);font-size:14.5px;line-height:1.6}
-  .detail{margin:22px 28px;background:#0c1120;border:1px solid var(--ns-line);border-radius:11px;padding:16px 18px}
-  .detail .row{display:flex;justify-content:space-between;padding:7px 0;font-size:13.5px;border-bottom:1px solid #161d2e}
-  .detail .row:last-child{border-bottom:none}
-  .detail .row .k{color:var(--ns-dim)}.detail .row .v{font-weight:600}
-  .detail .row .v.alert{color:#ff7a7a}
-  .qr-wrap{margin:0 28px 8px;text-align:center;background:#0c1120;border:1px solid var(--ns-line);border-radius:11px;padding:20px}
-  .qr-wrap p{color:var(--ns-dim);font-size:13px;margin-bottom:14px;line-height:1.5}
-  .qr{width:150px;height:150px;margin:0 auto;background:#fff;border-radius:8px;padding:10px;display:grid;grid-template-columns:repeat(13,1fr);gap:0}
-  .qr i{display:block;width:100%;padding-bottom:100%}
-  .qr i.on{background:#0a0e1a}
-  .qr-cap{color:var(--ns-dim);font-size:11px;margin-top:12px}
-  .actions{padding:6px 28px 28px}
-  .btn-primary{width:100%;background:var(--ns-blue);color:#fff;border:none;border-radius:10px;padding:14px;font-family:'Sora';font-weight:700;font-size:15px;cursor:pointer;transition:background .15s}
-  .btn-primary:hover{background:var(--ns-blue-d)}
-  .btn-text{display:block;width:100%;text-align:center;color:var(--ns-dim);font-size:13px;margin-top:14px;background:none;border:none;cursor:pointer}
-  .btn-text:hover{color:var(--ns-text)}
-  .foot{max-width:460px;margin:0 auto 30px;padding:0 22px;color:#5b667d;font-size:11px;text-align:center;line-height:1.6}
+  body{font-family:'Roboto',Arial,sans-serif;background:#f1f3f4;color:#202124;font-size:14px}
+
+  .fakebar{display:none}
+
+  /* ── Google header ── */
+  .g-header{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between}
+  .g-logo{display:flex;align-items:center;gap:2px;font-size:22px;font-family:'Roboto',sans-serif;font-weight:400;letter-spacing:-.5px}
+  .g-logo .g{color:#4285F4}.g-logo .o1{color:#EA4335}.g-logo .o2{color:#FBBC04}
+  .g-logo .g2{color:#4285F4}.g-logo .l{color:#34A853}.g-logo .e{color:#EA4335}
+  .g-header-right{display:flex;align-items:center;gap:12px}
+  .g-avatar{width:32px;height:32px;border-radius:50%;background:#4285F4;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;cursor:pointer}
+  .g-apps{cursor:pointer;color:#5f6368;font-size:20px;line-height:1}
+
+  /* ── Page layout ── */
+  .page{display:flex;align-items:flex-start;justify-content:center;padding:16px 12px 48px;background:#f1f3f4;min-height:calc(100vh - 56px)}
+  .card{background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.08);max-width:480px;width:100%;overflow:hidden}
+
+  /* ── Card alert bar ── */
+  .card-alert-bar{background:#EA4335;padding:14px 20px;display:flex;align-items:center;gap:12px}
+  .card-alert-bar .icon-wrap{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .card-alert-bar h1{color:#fff;font-size:16px;font-weight:500;line-height:1.3}
+  .card-alert-bar p{color:rgba(255,255,255,.85);font-size:12px;margin-top:2px}
+
+  /* ── Account row (sin email) ── */
+  .acct-row{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid #e8eaed}
+  .acct-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#4285F4,#0F9D58);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:500;flex-shrink:0}
+  .acct-info .name{font-size:15px;font-weight:500;color:#202124}
+  .acct-info .acct-sub{font-size:12px;color:#5f6368;margin-top:2px}
+
+  /* ── Card body ── */
+  .card-body{padding:20px}
+  .card-body .intro{font-size:14px;color:#3c4043;line-height:1.6;margin-bottom:18px}
+  .card-body .intro b{color:#202124}
+
+  /* ── Event box ── */
+  .event-box{background:#fef3f2;border:1px solid #fad2cf;border-radius:8px;padding:14px 16px;margin-bottom:18px}
+  .event-box .event-title{font-size:13px;font-weight:500;color:#c5221f;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .event-row{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #fad2cf;font-size:13px}
+  .event-row:last-child{border-bottom:none;padding-bottom:0}
+  .event-row .k{color:#5f6368;min-width:90px;flex-shrink:0;font-size:12px}
+  .event-row .v{color:#202124;font-weight:500}
+  .event-row .v.warn{color:#c5221f}
+
+  /* ── Info note ── */
+  .info-note{background:#e8f0fe;border-radius:8px;padding:12px 14px;margin-bottom:18px;font-size:13px;color:#1a73e8;line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+  .info-note .ic{font-size:16px;flex-shrink:0;margin-top:1px}
+
+  /* ── Password field ── */
+  .pass-label{font-size:13px;font-weight:500;color:#202124;margin-bottom:8px}
+  .pass-wrap{position:relative;margin-bottom:6px}
+  .pass-wrap input{width:100%;padding:14px 44px 14px 16px;border:1.5px solid #dadce0;border-radius:4px;font-size:16px;color:#202124;font-family:'Roboto',sans-serif;background:#fff;transition:border-color .15s}
+  .pass-wrap input:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 1px #1a73e8}
+  .pass-wrap .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#5f6368;font-size:18px;user-select:none}
+  .pass-hint{font-size:12px;color:#5f6368;margin-bottom:20px}
+  .pass-hint a{color:#1a73e8;text-decoration:none}
+
+  /* ── Buttons ── */
+  .btn-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:4px}
+  .btn-ghost{padding:10px 16px;border:none;background:none;color:#1a73e8;font-size:14px;font-weight:500;cursor:pointer;border-radius:4px;font-family:'Roboto',sans-serif}
+  .btn-ghost:active{background:#e8f0fe}
+  .btn-primary{padding:10px 20px;background:#1a73e8;color:#fff;border:none;border-radius:4px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;transition:background .15s;white-space:nowrap}
+  .btn-primary:active{background:#1765cc}
+
+  /* ── Divider & recovery ── */
+  .divider{height:1px;background:#e8eaed;margin:20px 0}
+  .recovery{font-size:13px;color:#5f6368;line-height:1.6}
+  .recovery a{color:#1a73e8;text-decoration:none}
+
+  /* ── Footer ── */
+  .g-footer{background:#f1f3f4;border-top:1px solid #e0e0e0;padding:12px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .g-footer a{font-size:12px;color:#5f6368;text-decoration:none;margin-right:14px}
+
+  /* ── Desktop ── */
+  @media(min-width:769px){
+    .g-header{padding:0 24px;height:64px}
+    .page{padding:40px 24px 60px}
+    .card-body{padding:24px 28px}
+    .card-alert-bar{padding:16px 28px}
+    .acct-row{padding:20px 28px}
+    .event-row .k{min-width:100px;font-size:13px}
+  }
 </style>
 </head>
 <body>
 <section id="bait">
+
+  <!-- Fake browser bar -->
   <div class="fakebar">
     <div class="dots"><span></span><span></span><span></span></div>
-    <div class="urlbox"><span class="lock">🔒</span><span class="url">https://<b>account-nubesegura.security-verify.app</b>/alert/session</span></div>
+    <div class="urlbox">
+      <span class="lock">🔒</span>
+      <span class="url">accounts.<b>google-security-alert.com</b>/signin/v2/challenge/pwd?TL=AHde3h</span>
+    </div>
   </div>
-  <div class="nav"><div class="nav-in"><span class="mark">☁️</span><span class="name">Nube<span>Segura</span></span></div></div>
 
-  <div class="main">
+  <!-- Google header -->
+  <div class="g-header">
+    <div class="g-logo">
+      <span class="g">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
+    </div>
+    <div class="g-header-right">
+      <span class="g-apps">⋮⋮⋮</span>
+      <div class="g-avatar" id="avatarInitial">?</div>
+    </div>
+  </div>
+
+  <!-- Main card -->
+  <div class="page">
     <div class="card">
-      <div class="card-head">
-        <div class="shield">🛡️</div>
-        <h1>Detectamos un inicio de sesión inusual</h1>
-        <p><span class="greet" id="greet">Hola de nuevo,</span> alguien intentó acceder a tu cuenta desde un dispositivo que no reconocemos. Si no fuiste tú, verifica tu identidad ahora para protegerla.</p>
+
+      <div class="card-alert-bar">
+        <div class="icon-wrap">🔐</div>
+        <div>
+          <h1>Alerta de seguridad crítica</h1>
+          <p>Se detectó actividad sospechosa en tu cuenta</p>
+        </div>
       </div>
 
-      <div class="detail">
-        <div class="row"><span class="k">Dispositivo</span><span class="v">Windows · Chrome</span></div>
-        <div class="row"><span class="k">Ubicación</span><span class="v alert">Bucarest, Rumania</span></div>
-        <div class="row"><span class="k">Fecha</span><span class="v" id="now">Hoy</span></div>
-        <div class="row"><span class="k">Estado</span><span class="v alert">⚠ Verificación pendiente</span></div>
+      <div class="acct-row">
+        <div class="acct-avatar" id="acctInitial">?</div>
+        <div class="acct-info">
+          <div class="name" id="acctName">Mi cuenta</div>
+          <div class="acct-sub">Cuenta de Google</div>
+        </div>
       </div>
 
-      <div class="qr-wrap">
-        <p>Escanea este código con tu teléfono para verificar tu identidad de forma segura:</p>
-        <div class="qr" id="qr"></div>
-        <div class="qr-cap">¿No puedes escanear? Usa el botón de abajo.</div>
-      </div>
+      <div class="card-body">
+        <p class="intro">Detectamos un intento de acceso a tu cuenta desde un dispositivo nuevo. <b>Si no fuiste tú, alguien podría tener tu contraseña.</b> Verifica tu identidad ahora para proteger tu cuenta.</p>
 
-      <div class="actions">
-        <button class="btn-primary" id="claimBtn">Verificar mi identidad</button>
-        <button class="btn-text" id="claimBtn2">No reconozco esta actividad → asegurar cuenta</button>
+        <div class="event-box">
+          <div class="event-title">⚠️ Inicio de sesión no reconocido</div>
+          <div class="event-row"><span class="k">Dispositivo</span><span class="v">Windows 11 · Chrome 124</span></div>
+          <div class="event-row"><span class="k">Ubicación</span><span class="v warn">Bucarest, Rumania 🇷🇴</span></div>
+          <div class="event-row"><span class="k">Dirección IP</span><span class="v warn">185.220.101.47</span></div>
+          <div class="event-row"><span class="k">Fecha y hora</span><span class="v" id="eventTime">Hoy, 20:14 hrs</span></div>
+          <div class="event-row"><span class="k">Estado</span><span class="v warn">Acceso bloqueado temporalmente</span></div>
+        </div>
+
+        <div class="info-note">
+          <span class="ic">ℹ️</span>
+          <span>Para protegerte, bloqueamos el acceso desde ese dispositivo. Confirma tu contraseña actual para verificar que eres tú y desbloquear tu cuenta.</span>
+        </div>
+
+        <div class="pass-label">Confirma tu contraseña</div>
+        <div class="pass-wrap">
+          <input type="password" id="passInput" placeholder="Escribe tu contraseña">
+          <span class="eye" id="togglePass">👁</span>
+        </div>
+        <p class="pass-hint">¿Olvidaste tu contraseña? <a href="#">Recupérala aquí</a></p>
+
+        <div class="btn-row">
+          <button class="btn-ghost" id="claimBtn2">No reconozco esta actividad</button>
+          <button class="btn-primary" id="claimBtn">Verificar y proteger</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="recovery">
+          ¿Tienes problemas para acceder? Puedes usar tu <a href="#">teléfono de recuperación</a> o tu <a href="#">correo alternativo</a> para verificar tu identidad.
+        </div>
       </div>
     </div>
   </div>
-  <p class="foot">NubeSegura Inc. · Este mensaje de seguridad fue enviado automáticamente. Por tu protección, verifica antes de 24 horas.</p>
+
+  <!-- Google footer -->
+  <div class="g-footer">
+    <div>
+      <a href="#">Privacidad</a>
+      <a href="#">Términos</a>
+      <a href="#">Ayuda</a>
+    </div>
+    <div style="font-size:12px;color:#5f6368">México (Español) 🌐</div>
+  </div>
+
 </section>
 
+<!-- ─── Pantalla educativa ─── -->
 <section id="reveal">
   <div class="reveal-hero">
     <span class="lvltag">Nivel 3 · Spear phishing dirigido</span>
     <div class="icon">🎣</div>
     <h1>El más peligroso: <em>phishing dirigido</em>.</h1>
-    <p>Este te habló por tu nombre, se ve impecable y usa un código QR para saltarse tus defensas. Si dudaste, es completamente normal — está diseñado para engañar incluso a usuarios cuidadosos. Esto es lo que lo delataba.</p>
+    <p>Este te habló por tu nombre, imitó Google pixel a pixel y usó urgencia emocional real. Si dudaste, es completamente normal — está diseñado para engañar incluso a usuarios cuidadosos.</p>
   </div>
   <div class="reveal-body">
     <div class="section-title">Por qué este es tan efectivo (y cómo detectarlo)</div>
-    <p class="section-sub">El spear phishing usa información sobre ti para ganarse tu confianza. Aquí las señales eran finísimas.</p>
-    <div class="flag"><div class="num">1</div><div><h3>Que sepa tu nombre NO lo hace legítimo</h3><p>Tu nombre y otros datos se consiguen fácil en redes sociales o filtraciones. <b>La personalización es justamente el arma del ataque dirigido</b>, no una prueba de autenticidad.</p></div></div>
-    <div class="flag"><div class="num">2</div><div><h3>El código QR salta tus defensas (quishing)</h3><p>Ya aprendiste a no hacer clic en enlaces raros… así que ahora te ponen un QR. Tu teléfono no muestra bien la URL y el filtro de la compu no lo revisa. <b>Un QR es un enlace que no puedes leer: trátalo con la misma sospecha.</b></p></div></div>
-    <div class="flag"><div class="num">3</div><div><h3>El dominio sigue sin ser el real</h3><p>Decía <code>account-nubesegura.security-verify.app</code>. De nuevo: el dominio verdadero es <code>security-verify.app</code>, no NubeSegura. <b>Aunque empiece con la marca, lo que manda es el final.</b></p></div></div>
-    <div class="flag"><div class="num">4</div><div><h3>Miedo + urgencia bien dosificados</h3><p>“Inicio de sesión desde Rumania”, “verificación pendiente”, “antes de 24 h”. El miedo a perder la cuenta te empuja a actuar sin verificar. <b>Mientras más te asusta un mensaje, más despacio debes ir.</b></p></div></div>
-    <div class="flag"><div class="num">5</div><div><h3>Te saca de tu canal de confianza</h3><p>Te lleva a una página externa en vez de pedirte abrir la app oficial. <b>Las alertas reales de seguridad las confirmas TÚ entrando directo al servicio, nunca por el enlace o QR que te mandaron.</b></p></div></div>
+    <p class="section-sub">El spear phishing usa el miedo a perder el acceso a tu cuenta para que actúes antes de pensar. Aquí las señales eran finísimas.</p>
+
+    <div class="flag"><div class="num">1</div><div>
+      <h3>El dominio no era accounts.google.com</h3>
+      <p>Decía <code>accounts.google-security-alert.com</code>. El dominio real es lo que aparece antes de la primera <code>/</code>: <code>google-security-alert.com</code>. Google no existe ahí. <b>Poner "google" como subdominio es el truco más viejo del phishing.</b></p>
+    </div></div>
+
+    <div class="flag"><div class="num">2</div><div>
+      <h3>Google jamás te pide tu contraseña por una alerta de seguridad</h3>
+      <p>Si Google detecta actividad sospechosa, te manda una notificación a tu teléfono o un código al correo alternativo. <b>Nunca una página que te pida escribir tu contraseña actual.</b></p>
+    </div></div>
+
+    <div class="flag"><div class="num">3</div><div>
+      <h3>Que sepa tu nombre no lo hace legítimo</h3>
+      <p>Tu nombre, foto de perfil y correo se consiguen fácil con una búsqueda o en filtraciones de datos. <b>La personalización es el arma del ataque dirigido, no una prueba de autenticidad.</b></p>
+    </div></div>
+
+    <div class="flag"><div class="num">4</div><div>
+      <h3>Miedo + urgencia bien dosificados</h3>
+      <p>"Inicio de sesión desde Rumania", "cuenta bloqueada". El miedo a perder el acceso te empuja a actuar antes de verificar. <b>Mientras más te asusta un mensaje, más despacio debes ir.</b></p>
+    </div></div>
+
+    <div class="flag"><div class="num">5</div><div>
+      <h3>Te saca de tu canal de confianza</h3>
+      <p>Te lleva a una página externa en vez de pedirte abrir myaccount.google.com por tu cuenta. <b>Las alertas reales las confirmas TÚ entrando directo al servicio, nunca por el enlace del mensaje.</b></p>
+    </div></div>
+
     <div class="rule-box"><h3>¿Qué hacer la próxima vez?</h3><ul>
-      <li>Ante una “alerta de seguridad”, no uses el enlace ni el QR: abre tú la app/sitio oficial y revisa ahí.</li>
-      <li>Trata los códigos QR de mensajes con la misma desconfianza que un enlace acortado.</li>
-      <li>Activa la verificación en dos pasos (2FA) en tus cuentas importantes.</li>
-      <li>Que un mensaje sepa tu nombre o datos tuyos no prueba nada: hoy esa información es fácil de conseguir.</li>
+      <li>Ante una "alerta de seguridad", no uses el enlace: abre tú <strong>myaccount.google.com</strong> y revisa ahí.</li>
+      <li>Activa la verificación en dos pasos (2FA) — así tu contraseña sola no sirve de nada si la roban.</li>
+      <li>Lee el dominio completo antes de escribir cualquier contraseña. La tuya vale más que cualquier alerta.</li>
+      <li>Que un mensaje sepa tu nombre y foto no prueba nada: esa información es fácil de conseguir.</li>
       <li>Si un mensaje te genera miedo o urgencia, esa emoción es la señal para detenerte y verificar por otro medio.</li>
     </ul></div>
-    <p class="footer-note">Gracias por participar en el ejercicio. 🛡️ <b>No se almacenó nada de lo que hiciste aquí más allá de “participó en el nivel 3”.</b></p>
+
+    <p class="footer-note">Gracias por participar en el ejercicio. 🛡️ <b>No se almacenó ninguna contraseña ni dato personal.</b> El servidor solo registró que participaste en el nivel 3.</p>
   </div>
 </section>
 
 <script>
   window.PHISH = { token: "__TOKEN__", level: __LEVEL__ };
-  // Saludo personalizado (el nombre llega por la URL ?n= y se inyecta en el servidor)
-  (function(){
-    var n = "__NAME__".trim();
-    var g = document.getElementById('greet');
-    if (n) { g.textContent = "Hola, " + n + ","; }
-    document.getElementById('now').textContent = new Date().toLocaleDateString('es-MX',{day:'numeric',month:'long'});
+
+  (function () {
+    var name = "__NAME__".trim();
+    var initial = name ? name.charAt(0).toUpperCase() : "M";
+
+    document.getElementById('avatarInitial').textContent = initial;
+    document.getElementById('acctInitial').textContent = initial;
+
+    if (name) {
+      document.getElementById('acctName').textContent = name;
+    }
+
+    document.getElementById('eventTime').textContent =
+      'Hoy, ' + new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) + ' hrs';
   })();
-  // QR decorativo (NO enlaza a ningún lado — es solo para la demo)
-  (function(){
-    var q=document.getElementById('qr'), N=13;
-    // patron pseudo-aleatorio determinista + marcas de esquina tipo QR
-    function corner(r,c){return (r<3&&c<3)||(r<3&&c>N-4)||(r>N-4&&c<3);}
-    for(var r=0;r<N;r++)for(var c=0;c<N;c++){var i=document.createElement('i');
-      var on = corner(r,c) ? ((r+c)%2===0||r===0||c===0||r===N-1||c===N-1) : (((r*7+c*13+r*c)%3)===0);
-      if(on)i.className='on';q.appendChild(i);}
-  })();
-  document.getElementById('claimBtn2').addEventListener('click',function(e){e.preventDefault();window.__reveal&&window.__reveal();});
+
+  // Toggle mostrar/ocultar contraseña
+  document.getElementById('togglePass').addEventListener('click', function () {
+    var inp = document.getElementById('passInput');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  });
+
+  document.getElementById('claimBtn2').addEventListener('click', function (e) {
+    e.preventDefault();
+    window.__reveal && window.__reveal();
+  });
 </script>
 <script src="/public/tracker.js"></script>
 </body>

@@ -3,125 +3,361 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PaqueExpress — Tu envío está retenido</title>
+<title>DHL | Aviso de retención aduanal — Acción requerida</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Delivery+Regular&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/public/reveal.css">
 <style>
-  :root{--pe-blue:#0b4f9e;--pe-blue-d:#08366c;--pe-orange:#ff7a00;--pe-ink:#1a2230;--pe-gray:#5b677a}
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Manrope',sans-serif;background:#eef2f7}
-  .fakebar{background:#e9edf2;display:flex;align-items:center;gap:10px;padding:8px 14px;font-size:13px;border-bottom:1px solid #d7dde6}
-  .dots{display:flex;gap:6px}.dots span{width:10px;height:10px;border-radius:50%;display:block}
-  .dots span:nth-child(1){background:#ff5f56}.dots span:nth-child(2){background:#ffbd2e}.dots span:nth-child(3){background:#27c93f}
-  .urlbox{flex:1;background:#fff;color:#444;border-radius:7px;padding:6px 12px;display:flex;align-items:center;gap:8px;max-width:680px;border:1px solid #d7dde6}
-  .urlbox .lock{color:#2aa84a;font-size:12px}.urlbox .url b{color:#c2410c}
-  #bait{min-height:100vh;padding:0 0 50px}
-  .topbar{background:var(--pe-blue);color:#fff;padding:0}
-  .topbar-in{max-width:600px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 22px}
-  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.3px}
-  .logo .mark{width:30px;height:30px;background:var(--pe-orange);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px}
-  .topbar small{color:#bcd4f0;font-size:12px;font-weight:500}
-  .wrap{max-width:600px;margin:0 auto;padding:26px 22px 0}
-  .alert{background:#fff4ec;border:1px solid #ffd6b0;border-left:4px solid var(--pe-orange);border-radius:10px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;margin-bottom:22px}
-  .alert .ic{font-size:20px}.alert b{color:#9a4a00}.alert p{color:#7a4a1f;font-size:14px;line-height:1.5}
-  .card{background:#fff;border:1px solid #e2e8f1;border-radius:14px;padding:26px 24px;box-shadow:0 8px 26px rgba(20,40,80,.07)}
-  h1{font-size:23px;color:var(--pe-ink);font-weight:800;margin-bottom:6px;letter-spacing:-.4px}
-  .lede{color:#5b677a;font-size:15px;line-height:1.55;margin-bottom:20px}
-  .track{display:flex;align-items:center;gap:14px;background:#f5f8fc;border:1px solid #e2e8f1;border-radius:10px;padding:14px 16px;margin-bottom:20px}
-  .track .pkg{width:42px;height:42px;background:var(--pe-blue);color:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:22px}
-  .track .meta{flex:1}.track .meta .num{font-weight:700;color:var(--pe-ink);font-size:14px}
-  .track .meta .st{color:#c2410c;font-size:13px;font-weight:600;margin-top:2px}
-  .track .badge{background:#fde8e8;color:#c0392b;font-size:11px;font-weight:700;padding:5px 9px;border-radius:20px}
-  .steps{display:flex;justify-content:space-between;margin:8px 4px 22px;position:relative}
-  .steps::before{content:"";position:absolute;top:11px;left:8%;right:8%;height:3px;background:#e2e8f1;z-index:0}
-  .step{position:relative;z-index:1;text-align:center;flex:1;font-size:11px;color:#9aa6b6}
-  .step .dot{width:22px;height:22px;border-radius:50%;background:#e2e8f1;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px}
-  .step.done .dot{background:#2aa84a}.step.cur .dot{background:var(--pe-orange)}.step.cur{color:var(--pe-orange);font-weight:700}
-  .fee{background:#f5f8fc;border-radius:10px;padding:16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
-  .fee .lbl{color:#5b677a;font-size:14px}.fee .amt{font-size:26px;font-weight:800;color:var(--pe-ink)}
-  label{display:block;font-size:13px;font-weight:600;color:#3a4658;margin:14px 0 6px}
-  input{width:100%;padding:12px 14px;border:1.5px solid #d7dde6;border-radius:9px;font-family:'Manrope';font-size:15px;color:#222}
-  input:focus{outline:none;border-color:var(--pe-blue)}
-  .row{display:flex;gap:12px}.row>div{flex:1}
-  .pay-btn{width:100%;margin-top:20px;background:var(--pe-blue);color:#fff;border:none;border-radius:10px;padding:15px;font-family:'Manrope';font-weight:800;font-size:16px;cursor:pointer;transition:background .15s}
-  .pay-btn:hover{background:var(--pe-blue-d)}
-  .reassure{text-align:center;color:#9aa6b6;font-size:12px;margin-top:14px}
-  .foot{max-width:600px;margin:18px auto 0;padding:0 22px;color:#9aa6b6;font-size:11px;line-height:1.5;text-align:center}
+  body{font-family:'Open Sans',Arial,sans-serif;background:#f4f4f4;color:#333;font-size:15px}
+
+  .fakebar{display:none}
+
+  /* Top yellow strip */
+  .dhl-strip{background:#FFCC00;height:4px}
+
+  /* ── Header ── */
+  .dhl-header{background:#fff;border-bottom:1px solid #e0e0e0}
+  .dhl-header-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:54px}
+  .dhl-logo{display:flex;align-items:center}
+  .dhl-logo-box{background:#FFCC00;padding:6px 12px 6px 8px;display:flex;align-items:center}
+  .dhl-logo-text{font-size:26px;font-weight:900;letter-spacing:-1px;color:#D40511;font-family:Arial Black,Arial,sans-serif;line-height:1}
+  .dhl-logo-sub{display:none}
+  .header-links{display:flex;gap:0;align-items:center}
+  .header-links a:not(.header-btn){display:none}
+  .header-btn{background:#D40511;color:#fff !important;padding:8px 14px;border-radius:2px;font-weight:700;font-size:13px;text-decoration:none}
+
+  /* ── Nav: oculto en móvil ── */
+  .dhl-nav{display:none}
+
+  /* ── Alert banner ── */
+  .alert-banner{background:#D40511;color:#fff;text-align:center;padding:10px 14px;font-size:13px;font-weight:600;line-height:1.5}
+  .alert-banner .tag{display:inline-block;background:#FFCC00;color:#D40511;padding:2px 8px;border-radius:2px;font-weight:700;font-size:12px;margin-bottom:4px}
+
+  /* ── Main: columna única por defecto (móvil) ── */
+  .main{max-width:1100px;margin:16px auto;padding:0 14px;display:grid;grid-template-columns:1fr;gap:14px}
+
+  /* ── Content header ── */
+  .content-header{margin-bottom:14px}
+  .content-header h1{font-size:18px;font-weight:700;color:#D40511;margin-bottom:6px;line-height:1.3}
+  .content-header p{color:#555;font-size:13px;line-height:1.6}
+
+  /* ── Tracking card ── */
+  .track-card{background:#fff;border:1px solid #ddd;border-top:4px solid #D40511;padding:16px 14px;margin-bottom:14px}
+  .track-card h2{font-size:13px;font-weight:700;color:#333;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
+  .track-row{display:flex;flex-direction:column;gap:2px;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+  .track-row:last-child{border-bottom:none}
+  .track-row .lbl{color:#777;font-weight:600;font-size:12px}
+  .track-row .val{font-weight:700;color:#333}
+  .track-row .val.red{color:#D40511}
+  .track-row .val.ok{color:#2e7d32}
+
+  /* ── Timeline ── */
+  .timeline{background:#fff;border:1px solid #ddd;padding:16px 14px;margin-bottom:14px}
+  .timeline h2{font-size:13px;font-weight:700;color:#333;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+  .tl-steps{position:relative;padding-left:28px}
+  .tl-steps::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:#ddd}
+  .tl-step{position:relative;margin-bottom:18px}
+  .tl-step:last-child{margin-bottom:0}
+  .tl-dot{position:absolute;left:-28px;top:2px;width:18px;height:18px;border-radius:50%;background:#ddd;border:2px solid #fff;box-shadow:0 0 0 2px #ddd}
+  .tl-dot.done{background:#2e7d32;box-shadow:0 0 0 2px #2e7d32}
+  .tl-dot.cur{background:#D40511;box-shadow:0 0 0 2px #D40511}
+  .tl-step .label{font-size:13px;font-weight:700;color:#333}
+  .tl-step .label.cur{color:#D40511}
+  .tl-step .date{font-size:11px;color:#888;margin-top:2px}
+  .tl-step .desc{font-size:12px;color:#555;margin-top:4px;line-height:1.5}
+
+  /* ── Sidebar / pago ── */
+  .sidebar{}
+  .pay-card{background:#fff;border:1px solid #ddd;border-top:4px solid #FFCC00;padding:18px 14px}
+  .pay-card h2{font-size:16px;font-weight:700;color:#333;margin-bottom:4px}
+  .pay-card .sub{font-size:13px;color:#777;margin-bottom:16px;line-height:1.5}
+  .fee-box{background:#fff8e1;border:1px solid #FFCC00;border-radius:2px;padding:14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+  .fee-box .fee-lbl{font-size:13px;color:#555;font-weight:600}
+  .fee-box .fee-amt{font-size:26px;font-weight:700;color:#333}
+  .fee-box .fee-cur{font-size:13px;color:#777;margin-left:2px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+  .field input{width:100%;padding:13px;border:1.5px solid #ccc;border-radius:2px;font-size:16px;color:#333;font-family:inherit}
+  .field input:focus{outline:none;border-color:#D40511}
+  .field-row{display:flex;gap:12px}
+  .field-row .field{flex:1}
+  .pay-btn{width:100%;background:#D40511;color:#fff;border:none;padding:15px;font-size:16px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;transition:background .15s;border-radius:2px}
+  .pay-btn:active{background:#b00d0d}
+  .secure-note{text-align:center;color:#888;font-size:11px;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px}
+  .deadline{background:#fff3f3;border:1px solid #f5c6c6;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#c62828;line-height:1.5;border-radius:2px}
+  .deadline strong{display:block;font-size:14px;margin-bottom:2px}
+
+  /* ── Footer ── */
+  .dhl-footer{background:#333;color:#aaa;margin-top:32px;padding:20px 0}
+  .dhl-footer-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;flex-direction:column;gap:10px;font-size:12px}
+  .dhl-footer a{color:#aaa;text-decoration:none;margin-right:12px}
+  .dhl-footer-logo{font-size:18px;font-weight:900;color:#FFCC00;letter-spacing:-1px;font-family:Arial Black,Arial,sans-serif}
+  .footer-links{display:flex;flex-wrap:wrap;gap:4px}
+
+  /* ── Desktop ── */
+  @media(min-width:769px){
+    /* Header desktop */
+    .dhl-header-inner{padding:0 24px;height:68px}
+    .dhl-logo-box{padding:8px 14px 8px 10px}
+    .dhl-logo-text{font-size:32px}
+    .dhl-logo-sub{display:block;font-size:11px;color:#666;margin-left:14px;line-height:1.3;font-weight:600}
+    .header-links{gap:24px}
+    .header-links a:not(.header-btn){display:block;color:#555;text-decoration:none;font-size:13px}
+    .header-links a:hover{color:#D40511}
+    .header-btn{padding:9px 18px}
+
+    /* Nav desktop */
+    .dhl-nav{display:block;background:#fff;border-bottom:2px solid #FFCC00}
+    .dhl-nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex}
+    .dhl-nav a{display:block;padding:14px 18px;font-size:14px;color:#333;text-decoration:none;font-weight:600;border-bottom:3px solid transparent;transition:.15s}
+    .dhl-nav a:hover{color:#D40511;border-bottom-color:#D40511}
+
+    /* Alert banner desktop */
+    .alert-banner{padding:11px 20px;font-size:14px}
+    .alert-banner .tag{display:inline;margin-bottom:0;margin-right:10px}
+
+    /* Main desktop: dos columnas */
+    .main{margin:32px auto;padding:0 24px;grid-template-columns:1fr 380px;gap:28px}
+
+    /* Content header desktop */
+    .content-header h1{font-size:24px}
+    .content-header p{font-size:14px}
+
+    /* Cards desktop */
+    .track-card{padding:22px 24px}
+    .track-card h2{font-size:15px}
+    .track-row{flex-direction:row;justify-content:space-between;font-size:14px;gap:0;padding:10px 0}
+    .track-row .lbl{font-size:14px}
+    .timeline{padding:22px 24px}
+    .timeline h2{font-size:15px}
+    .tl-step .label{font-size:14px}
+    .tl-step .desc{font-size:13px}
+
+    /* Sidebar desktop */
+    .pay-card{padding:24px}
+
+    /* Footer desktop */
+    .dhl-footer-inner{flex-direction:row;justify-content:space-between;align-items:center}
+    .footer-links{flex-wrap:nowrap}
+  }
 </style>
 </head>
 <body>
 <section id="bait">
+
+  <!-- Fake browser bar -->
   <div class="fakebar">
     <div class="dots"><span></span><span></span><span></span></div>
-    <div class="urlbox"><span class="lock">🔒</span><span class="url">https://<b>paqueexpress-mx.envios-rastreo.com</b>/aduana/retencion</span></div>
-  </div>
-  <div class="topbar"><div class="topbar-in">
-    <div class="logo"><span class="mark">📦</span>PaqueExpress</div>
-    <small>Rastreo &amp; Logística</small>
-  </div></div>
-
-  <div class="wrap">
-    <div class="alert"><span class="ic">⚠️</span><div><b>Acción requerida en las próximas 24 horas.</b><p>Tu paquete será devuelto al remitente si no se completa el pago de aduana pendiente.</p></div></div>
-
-    <div class="card">
-      <h1>Tu envío está retenido en aduana</h1>
-      <p class="lede">Hemos intentado entregar tu paquete, pero requiere el pago de una tarifa de gestión aduanal pendiente. Completa el pago para reprogramar la entrega hoy mismo.</p>
-
-      <div class="track">
-        <div class="pkg">📦</div>
-        <div class="meta"><div class="num">Guía: MX-884512309-PE</div><div class="st">⏸ Retenido — pago pendiente</div></div>
-        <div class="badge">URGENTE</div>
-      </div>
-
-      <div class="steps">
-        <div class="step done"><div class="dot">✓</div>Recibido</div>
-        <div class="step done"><div class="dot">✓</div>En tránsito</div>
-        <div class="step cur"><div class="dot">!</div>Aduana</div>
-        <div class="step"><div class="dot"></div>Entrega</div>
-      </div>
-
-      <div class="fee"><span class="lbl">Tarifa de gestión aduanal</span><span class="amt">$48.00</span></div>
-
-      <label>Nombre del titular de la tarjeta</label>
-      <input type="text" placeholder="Como aparece en la tarjeta">
-      <label>Número de tarjeta</label>
-      <input type="text" placeholder="0000 0000 0000 0000">
-      <div class="row">
-        <div><label>Vencimiento</label><input type="text" placeholder="MM/AA"></div>
-        <div><label>CVV</label><input type="text" placeholder="123"></div>
-      </div>
-
-      <button class="pay-btn" id="claimBtn">Pagar $48.00 y reprogramar entrega</button>
-      <p class="reassure">🔒 Pago cifrado SSL · Tus datos están protegidos</p>
+    <div class="urlbox">
+      <span class="lock">🔒</span>
+      <span class="url">https://<b>dhl-mx.rastreo-aduana.com</b>/es/retención-aduanal?guia=MX88451MX</span>
     </div>
-    <p class="foot">© PaqueExpress Logística. Este es un correo automático, no responder. Si no esperabas este paquete, ignora este mensaje.</p>
   </div>
+
+  <div class="dhl-strip"></div>
+
+  <!-- Header -->
+  <div class="dhl-header">
+    <div class="dhl-header-inner">
+      <div class="dhl-logo">
+        <div class="dhl-logo-box">
+          <span class="dhl-logo-text">DHL</span>
+        </div>
+        <span class="dhl-logo-sub">Express Mexico<br><span style="font-weight:400;color:#999">Logística &amp; Rastreo</span></span>
+      </div>
+      <div class="header-links">
+        <a href="#">Rastrear</a>
+        <a href="#">Envío</a>
+        <a href="#">Servicio al cliente</a>
+        <a href="#" class="header-btn">Iniciar sesión</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="dhl-nav">
+    <div class="dhl-nav-inner">
+      <a href="#">Rastrear</a>
+      <a href="#">Envío</a>
+      <a href="#">Logística empresarial</a>
+      <a href="#">Servicio al cliente</a>
+    </div>
+  </div>
+
+  <!-- Alert banner -->
+  <div class="alert-banner">
+    <div><span class="tag">ACCIÓN REQUERIDA</span></div>
+    Tu envío tiene una tarifa aduanal pendiente. Sin pago, será devuelto al remitente en <strong>24 horas</strong>.
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Left: tracking info -->
+    <div>
+      <div class="content-header">
+        <h1>Retención Aduanal — Pago Pendiente</h1>
+        <p>El Servicio de Administración Tributaria (SAT) ha retenido su paquete en la aduana de la Ciudad de México por una tarifa de gestión no liquidada. Complete el pago para liberar y reprogramar su entrega.</p>
+      </div>
+
+      <div class="track-card">
+        <h2>Detalles del envío</h2>
+        <div class="track-row"><span class="lbl">Número de guía</span><span class="val">MX-884512309-DHL</span></div>
+        <div class="track-row"><span class="lbl">Servicio</span><span class="val">DHL Express Worldwide</span></div>
+        <div class="track-row"><span class="lbl">Origen</span><span class="val">Miami, FL — Estados Unidos</span></div>
+        <div class="track-row"><span class="lbl">Destino</span><span class="val">Ciudad de México, CDMX</span></div>
+        <div class="track-row"><span class="lbl">Estado actual</span><span class="val red">⏸ Retenido — Tarifa aduanal pendiente</span></div>
+        <div class="track-row"><span class="lbl">Fecha estimada de entrega</span><span class="val red">En espera de pago</span></div>
+      </div>
+
+      <div class="timeline">
+        <h2>Historial de rastreo</h2>
+        <div class="tl-steps">
+          <div class="tl-step">
+            <div class="tl-dot done"></div>
+            <div class="label">Recolectado</div>
+            <div class="date">19 May 2026 · 09:14 — Miami, FL</div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-dot done"></div>
+            <div class="label">En tránsito internacional</div>
+            <div class="date">20 May 2026 · 02:38 — Hub DHL Cincinnati</div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-dot done"></div>
+            <div class="label">Llegó a México</div>
+            <div class="date">21 May 2026 · 07:55 — AICM, Ciudad de México</div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-dot cur"></div>
+            <div class="label cur">Retenido en aduana — Pago pendiente</div>
+            <div class="date">22 May 2026 · 11:03 — Aduana CDMX</div>
+            <div class="desc">El SAT requiere el pago de una tarifa de gestión aduanal antes de liberar el paquete. Sin pago en 24 h, el envío será regresado al remitente.</div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-dot"></div>
+            <div class="label" style="color:#aaa">En camino a entrega</div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-dot"></div>
+            <div class="label" style="color:#aaa">Entregado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: payment sidebar -->
+    <div class="sidebar">
+      <div class="pay-card">
+        <h2>Pagar tarifa aduanal</h2>
+        <p class="sub">Pago requerido por el SAT para la liberación de su envío internacional.</p>
+
+        <div class="deadline">
+          <strong>⏰ Vence: hoy a las 23:59 hrs</strong>
+          Después de este plazo, el paquete será devuelto al remitente y se cobrarán cargos adicionales de reenvío.
+        </div>
+
+        <div class="fee-box">
+          <div>
+            <div class="fee-lbl">Tarifa de gestión aduanal</div>
+            <div style="font-size:11px;color:#999;margin-top:2px">Determinada por SAT — Ref. AX-2026-MX</div>
+          </div>
+          <div><span class="fee-amt">$58</span><span class="fee-cur">MXN</span></div>
+        </div>
+
+        <div class="field">
+          <label>Titular de la tarjeta</label>
+          <input type="text" placeholder="Como aparece en la tarjeta">
+        </div>
+        <div class="field">
+          <label>Número de tarjeta</label>
+          <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Vencimiento</label>
+            <input type="text" placeholder="MM / AA" maxlength="7">
+          </div>
+          <div class="field">
+            <label>CVV</label>
+            <input type="text" placeholder="000" maxlength="4">
+          </div>
+        </div>
+
+        <button class="pay-btn" id="claimBtn">Pagar $58.00 MXN y liberar envío</button>
+
+        <div class="secure-note">
+          🔒 Pago cifrado SSL · Procesado por DHL Secure Pay
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="dhl-footer">
+    <div class="dhl-footer-inner">
+      <div>
+        <span class="dhl-footer-logo">DHL</span>
+        <span style="margin-left:12px">© 2026 DHL International GmbH. Todos los derechos reservados.</span>
+      </div>
+      <div class="footer-links">
+        <a href="#">Aviso de privacidad</a>
+        <a href="#">Términos de uso</a>
+        <a href="#">Accesibilidad</a>
+        <a href="#">Mapa del sitio</a>
+      </div>
+    </div>
+  </div>
+
 </section>
 
+<!-- ─── Pantalla educativa ─── -->
 <section id="reveal">
   <div class="reveal-hero">
     <span class="lvltag">Nivel 2 · Phishing con urgencia</span>
     <div class="icon">🎣</div>
     <h1>Esto también era <em>phishing</em>.</h1>
-    <p>Este fue más difícil: se ve profesional, tiene candado de seguridad y no abusa de la ortografía. Aquí las señales son más sutiles — y la más peligrosa de todas: pedirte los datos de tu tarjeta.</p>
+    <p>Este fue más difícil: se ve profesional, tiene candado de seguridad y usa la identidad visual de DHL. Aquí las señales son más sutiles — y la más peligrosa: pedirte los datos completos de tu tarjeta.</p>
   </div>
   <div class="reveal-body">
     <div class="section-title">Las señales que delataban el engaño</div>
-    <p class="section-sub">El “candado” y un diseño bonito NO significan que el sitio sea legítimo. Esto es lo que debiste revisar.</p>
-    <div class="flag"><div class="num">1</div><div><h3>El dominio real no era el que esperabas</h3><p>Decía <code>paqueexpress-mx.envios-rastreo.com</code>. El dominio verdadero es lo último antes de la primera barra: aquí era <code>envios-rastreo.com</code>, no PaqueExpress. <b>Los estafadores ponen la marca como subdominio para engañarte.</b></p></div></div>
-    <div class="flag"><div class="num">2</div><div><h3>El candado 🔒 no garantiza nada</h3><p>Hoy cualquiera obtiene un certificado SSL gratis. <b>El candado solo dice que la conexión va cifrada, no que el sitio sea de quien dice ser.</b></p></div></div>
-    <div class="flag"><div class="num">3</div><div><h3>Pago inesperado + urgencia</h3><p>“Paga $48 en 24 h o se devuelve tu paquete.” Un monto pequeño para que no lo pienses, y un reloj para que no verifiques. <b>Las paqueterías reales no cobran aduana por un formulario web así.</b></p></div></div>
-    <div class="flag"><div class="num">4</div><div><h3>Te pide los datos completos de tu tarjeta</h3><p>Número, vencimiento y <b>CVV</b>. Con eso pueden hacer cargos. <b>Ningún proceso legítimo de “reprogramar entrega” necesita tu CVV en una página a la que llegaste por un enlace.</b></p></div></div>
-    <div class="flag"><div class="num">5</div><div><h3>¿De verdad esperabas ese paquete?</h3><p>El mensaje juega con que “a lo mejor sí tengo un envío”. <b>Si no recuerdas haber comprado nada, es casi seguro un fraude.</b></p></div></div>
+    <p class="section-sub">El diseño bonito y el candado 🔒 NO significan que el sitio sea legítimo. Esto es lo que debiste revisar.</p>
+
+    <div class="flag"><div class="num">1</div><div>
+      <h3>El dominio no era dhl.com</h3>
+      <p>La URL decía <code>dhl-mx.rastreo-aduana.com</code>. Lo importante es lo que está justo antes de la primera <code>/</code>: <code>rastreo-aduana.com</code>, que no tiene nada que ver con DHL. <b>La marca en el subdominio es un truco clásico.</b></p>
+    </div></div>
+
+    <div class="flag"><div class="num">2</div><div>
+      <h3>El candado 🔒 no garantiza nada</h3>
+      <p>Hoy cualquiera obtiene un certificado SSL gratis en minutos. <b>El candado solo dice que la conexión va cifrada, no que el sitio sea de DHL.</b></p>
+    </div></div>
+
+    <div class="flag"><div class="num">3</div><div>
+      <h3>Pago inesperado + urgencia artificial</h3>
+      <p>"Paga $58 hoy o se devuelve el paquete." Un monto pequeño para que no lo pienses, y un reloj para que no verifiques. <b>DHL no cobra cuotas aduanales por un formulario web al que llegaste por un link.</b></p>
+    </div></div>
+
+    <div class="flag"><div class="num">4</div><div>
+      <h3>Te pide los datos completos de tu tarjeta, incluyendo CVV</h3>
+      <p>Número, vencimiento y CVV. Con eso pueden hacer cargos inmediatos. <b>Ningún proceso legítimo de liberación aduanal necesita tu CVV en una página a la que llegaste por un enlace.</b></p>
+    </div></div>
+
+    <div class="flag"><div class="num">5</div><div>
+      <h3>¿Realmente esperabas ese paquete?</h3>
+      <p>El mensaje juega con que "a lo mejor sí tengo un envío pendiente". <b>Si no recuerdas haber comprado algo de EE.UU., es casi seguro un fraude.</b></p>
+    </div></div>
+
     <div class="rule-box"><h3>¿Qué hacer la próxima vez?</h3><ul>
-      <li>Rastrea tu paquete SOLO en la app o el sitio oficial que tú escribas, nunca desde el enlace del mensaje.</li>
-      <li>Lee el dominio de derecha a izquierda: lo que importa es lo último antes de “/”.</li>
+      <li>Rastrea tu paquete solo en <strong>dhl.com</strong>, escrito por ti en el navegador, nunca desde el enlace del mensaje.</li>
+      <li>Lee el dominio completo: lo que importa es lo último antes de la primera <code>/</code>.</li>
       <li>Desconfía de cualquier cobro inesperado, por pequeño que sea.</li>
-      <li>Nunca metas número de tarjeta + CVV en una página que llegó por SMS, correo o WhatsApp.</li>
-      <li>Si dudas, llama al servicio oficial de la paquetería con el número de su sitio real.</li>
+      <li>Nunca metas número de tarjeta + CVV en una página a la que llegaste por SMS, correo o WhatsApp.</li>
+      <li>Ante la duda, llama al número oficial de DHL que aparece en <strong>dhl.com</strong>.</li>
     </ul></div>
+
     <p class="footer-note">Gracias por participar. 🛡️ <b>No se guardó ningún dato que escribiste:</b> el servidor solo registró que enviaste el formulario, para medir el ejercicio.</p>
   </div>
 </section>
