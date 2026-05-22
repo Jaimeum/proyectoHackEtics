@@ -67,7 +67,7 @@
     <h2>Generador de enlaces por participante</h2>
     <p>Crea un enlace único para cada persona. El token es anónimo; el nombre (opcional, solo nivel 3) viaja en la URL y NO se guarda en la base de datos.</p>
     <div class="frm">
-      <div><label>Token anónimo</label><input id="g-token" placeholder="U-7F3A" value="U-001"></div>
+      <div><label>Token anónimo</label><input id="g-token" placeholder="U-7F3A" readonly><button onclick="newToken()" title="Generar nuevo token" style="margin-left:6px;padding:6px 10px;cursor:pointer">↻</button></div>
       <div><label>Nivel</label><select id="g-level"><option>1</option><option>2</option><option>3</option></select></div>
       <div><label>Nombre (opcional, nivel 3)</label><input id="g-name" placeholder="Carlos"></div>
       <div><button onclick="genLink()">Generar enlace</button></div>
@@ -121,8 +121,15 @@
     }).join('');}
   }
 
+  function newToken(){
+    var arr=new Uint8Array(9);
+    crypto.getRandomValues(arr);
+    document.getElementById('g-token').value=Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16).toUpperCase();
+  }
+  newToken(); // genera uno al cargar la página
+
   function genLink(){
-    var t=encodeURIComponent(document.getElementById('g-token').value||'U-001');
+    var t=encodeURIComponent(document.getElementById('g-token').value);
     var l=document.getElementById('g-level').value;
     var n=document.getElementById('g-name').value.trim();
     var url=location.origin+'/n'+l+'?u='+t;
