@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PaqueExpress — Tu envío está retenido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/public/reveal.css">
+<style>
+  :root{--pe-blue:#0b4f9e;--pe-blue-d:#08366c;--pe-orange:#ff7a00;--pe-ink:#1a2230;--pe-gray:#5b677a}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Manrope',sans-serif;background:#eef2f7}
+  .fakebar{background:#e9edf2;display:flex;align-items:center;gap:10px;padding:8px 14px;font-size:13px;border-bottom:1px solid #d7dde6}
+  .dots{display:flex;gap:6px}.dots span{width:10px;height:10px;border-radius:50%;display:block}
+  .dots span:nth-child(1){background:#ff5f56}.dots span:nth-child(2){background:#ffbd2e}.dots span:nth-child(3){background:#27c93f}
+  .urlbox{flex:1;background:#fff;color:#444;border-radius:7px;padding:6px 12px;display:flex;align-items:center;gap:8px;max-width:680px;border:1px solid #d7dde6}
+  .urlbox .lock{color:#2aa84a;font-size:12px}.urlbox .url b{color:#c2410c}
+  #bait{min-height:100vh;padding:0 0 50px}
+  .topbar{background:var(--pe-blue);color:#fff;padding:0}
+  .topbar-in{max-width:600px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 22px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.3px}
+  .logo .mark{width:30px;height:30px;background:var(--pe-orange);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .topbar small{color:#bcd4f0;font-size:12px;font-weight:500}
+  .wrap{max-width:600px;margin:0 auto;padding:26px 22px 0}
+  .alert{background:#fff4ec;border:1px solid #ffd6b0;border-left:4px solid var(--pe-orange);border-radius:10px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;margin-bottom:22px}
+  .alert .ic{font-size:20px}.alert b{color:#9a4a00}.alert p{color:#7a4a1f;font-size:14px;line-height:1.5}
+  .card{background:#fff;border:1px solid #e2e8f1;border-radius:14px;padding:26px 24px;box-shadow:0 8px 26px rgba(20,40,80,.07)}
+  h1{font-size:23px;color:var(--pe-ink);font-weight:800;margin-bottom:6px;letter-spacing:-.4px}
+  .lede{color:#5b677a;font-size:15px;line-height:1.55;margin-bottom:20px}
+  .track{display:flex;align-items:center;gap:14px;background:#f5f8fc;border:1px solid #e2e8f1;border-radius:10px;padding:14px 16px;margin-bottom:20px}
+  .track .pkg{width:42px;height:42px;background:var(--pe-blue);color:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .track .meta{flex:1}.track .meta .num{font-weight:700;color:var(--pe-ink);font-size:14px}
+  .track .meta .st{color:#c2410c;font-size:13px;font-weight:600;margin-top:2px}
+  .track .badge{background:#fde8e8;color:#c0392b;font-size:11px;font-weight:700;padding:5px 9px;border-radius:20px}
+  .steps{display:flex;justify-content:space-between;margin:8px 4px 22px;position:relative}
+  .steps::before{content:"";position:absolute;top:11px;left:8%;right:8%;height:3px;background:#e2e8f1;z-index:0}
+  .step{position:relative;z-index:1;text-align:center;flex:1;font-size:11px;color:#9aa6b6}
+  .step .dot{width:22px;height:22px;border-radius:50%;background:#e2e8f1;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px}
+  .step.done .dot{background:#2aa84a}.step.cur .dot{background:var(--pe-orange)}.step.cur{color:var(--pe-orange);font-weight:700}
+  .fee{background:#f5f8fc;border-radius:10px;padding:16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+  .fee .lbl{color:#5b677a;font-size:14px}.fee .amt{font-size:26px;font-weight:800;color:var(--pe-ink)}
+  label{display:block;font-size:13px;font-weight:600;color:#3a4658;margin:14px 0 6px}
+  input{width:100%;padding:12px 14px;border:1.5px solid #d7dde6;border-radius:9px;font-family:'Manrope';font-size:15px;color:#222}
+  input:focus{outline:none;border-color:var(--pe-blue)}
+  .row{display:flex;gap:12px}.row>div{flex:1}
+  .pay-btn{width:100%;margin-top:20px;background:var(--pe-blue);color:#fff;border:none;border-radius:10px;padding:15px;font-family:'Manrope';font-weight:800;font-size:16px;cursor:pointer;transition:background .15s}
+  .pay-btn:hover{background:var(--pe-blue-d)}
+  .reassure{text-align:center;color:#9aa6b6;font-size:12px;margin-top:14px}
+  .foot{max-width:600px;margin:18px auto 0;padding:0 22px;color:#9aa6b6;font-size:11px;line-height:1.5;text-align:center}
+</style>
+</head>
+<body>
+<section id="bait">
+  <div class="fakebar">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="urlbox"><span class="lock">🔒</span><span class="url">https://<b>paqueexpress-mx.envios-rastreo.com</b>/aduana/retencion</span></div>
+  </div>
+  <div class="topbar"><div class="topbar-in">
+    <div class="logo"><span class="mark">📦</span>PaqueExpress</div>
+    <small>Rastreo &amp; Logística</small>
+  </div></div>
+
+  <div class="wrap">
+    <div class="alert"><span class="ic">⚠️</span><div><b>Acción requerida en las próximas 24 horas.</b><p>Tu paquete será devuelto al remitente si no se completa el pago de aduana pendiente.</p></div></div>
+
+    <div class="card">
+      <h1>Tu envío está retenido en aduana</h1>
+      <p class="lede">Hemos intentado entregar tu paquete, pero requiere el pago de una tarifa de gestión aduanal pendiente. Completa el pago para reprogramar la entrega hoy mismo.</p>
+
+      <div class="track">
+        <div class="pkg">📦</div>
+        <div class="meta"><div class="num">Guía: MX-884512309-PE</div><div class="st">⏸ Retenido — pago pendiente</div></div>
+        <div class="badge">URGENTE</div>
+      </div>
+
+      <div class="steps">
+        <div class="step done"><div class="dot">✓</div>Recibido</div>
+        <div class="step done"><div class="dot">✓</div>En tránsito</div>
+        <div class="step cur"><div class="dot">!</div>Aduana</div>
+        <div class="step"><div class="dot"></div>Entrega</div>
+      </div>
+
+      <div class="fee"><span class="lbl">Tarifa de gestión aduanal</span><span class="amt">$48.00</span></div>
+
+      <label>Nombre del titular de la tarjeta</label>
+      <input type="text" placeholder="Como aparece en la tarjeta">
+      <label>Número de tarjeta</label>
+      <input type="text" placeholder="0000 0000 0000 0000">
+      <div class="row">
+        <div><label>Vencimiento</label><input type="text" placeholder="MM/AA"></div>
+        <div><label>CVV</label><input type="text" placeholder="123"></div>
+      </div>
+
+      <button class="pay-btn" id="claimBtn">Pagar $48.00 y reprogramar entrega</button>
+      <p class="reassure">🔒 Pago cifrado SSL · Tus datos están protegidos</p>
+    </div>
+    <p class="foot">© PaqueExpress Logística. Este es un correo automático, no responder. Si no esperabas este paquete, ignora este mensaje.</p>
+  </div>
+</section>
+
+<section id="reveal">
+  <div class="reveal-hero">
+    <span class="lvltag">Nivel 2 · Phishing con urgencia</span>
+    <div class="icon">🎣</div>
+    <h1>Esto también era <em>phishing</em>.</h1>
+    <p>Este fue más difícil: se ve profesional, tiene candado de seguridad y no abusa de la ortografía. Aquí las señales son más sutiles — y la más peligrosa de todas: pedirte los datos de tu tarjeta.</p>
+  </div>
+  <div class="reveal-body">
+    <div class="section-title">Las señales que delataban el engaño</div>
+    <p class="section-sub">El “candado” y un diseño bonito NO significan que el sitio sea legítimo. Esto es lo que debiste revisar.</p>
+    <div class="flag"><div class="num">1</div><div><h3>El dominio real no era el que esperabas</h3><p>Decía <code>paqueexpress-mx.envios-rastreo.com</code>. El dominio verdadero es lo último antes de la primera barra: aquí era <code>envios-rastreo.com</code>, no PaqueExpress. <b>Los estafadores ponen la marca como subdominio para engañarte.</b></p></div></div>
+    <div class="flag"><div class="num">2</div><div><h3>El candado 🔒 no garantiza nada</h3><p>Hoy cualquiera obtiene un certificado SSL gratis. <b>El candado solo dice que la conexión va cifrada, no que el sitio sea de quien dice ser.</b></p></div></div>
+    <div class="flag"><div class="num">3</div><div><h3>Pago inesperado + urgencia</h3><p>“Paga $48 en 24 h o se devuelve tu paquete.” Un monto pequeño para que no lo pienses, y un reloj para que no verifiques. <b>Las paqueterías reales no cobran aduana por un formulario web así.</b></p></div></div>
+    <div class="flag"><div class="num">4</div><div><h3>Te pide los datos completos de tu tarjeta</h3><p>Número, vencimiento y <b>CVV</b>. Con eso pueden hacer cargos. <b>Ningún proceso legítimo de “reprogramar entrega” necesita tu CVV en una página a la que llegaste por un enlace.</b></p></div></div>
+    <div class="flag"><div class="num">5</div><div><h3>¿De verdad esperabas ese paquete?</h3><p>El mensaje juega con que “a lo mejor sí tengo un envío”. <b>Si no recuerdas haber comprado nada, es casi seguro un fraude.</b></p></div></div>
+    <div class="rule-box"><h3>¿Qué hacer la próxima vez?</h3><ul>
+      <li>Rastrea tu paquete SOLO en la app o el sitio oficial que tú escribas, nunca desde el enlace del mensaje.</li>
+      <li>Lee el dominio de derecha a izquierda: lo que importa es lo último antes de “/”.</li>
+      <li>Desconfía de cualquier cobro inesperado, por pequeño que sea.</li>
+      <li>Nunca metas número de tarjeta + CVV en una página que llegó por SMS, correo o WhatsApp.</li>
+      <li>Si dudas, llama al servicio oficial de la paquetería con el número de su sitio real.</li>
+    </ul></div>
+    <p class="footer-note">Gracias por participar. 🛡️ <b>No se guardó ningún dato que escribiste:</b> el servidor solo registró que enviaste el formulario, para medir el ejercicio.</p>
+  </div>
+</section>
+
+<script>
+  window.PHISH = { token: "__TOKEN__", level: __LEVEL__ };
+</script>
+<script src="/public/tracker.js"></script>
+</body>
+</html>

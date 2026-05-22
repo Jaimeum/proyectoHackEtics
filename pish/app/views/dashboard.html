@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhishLab · Panel de resultados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d1117;--card:#161b22;--line:#2a3340;--text:#e6edf3;--dim:#8b949e;--blue:#4f8cff;--green:#3fb950;--warn:#f0883e;--red:#f85149}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);padding:0 0 60px}
+  header{border-bottom:1px solid var(--line);padding:22px 0;background:linear-gradient(180deg,#1f6f3a14,transparent)}
+  .in{max-width:980px;margin:0 auto;padding:0 22px}
+  header h1{font-family:'Fraunces',serif;font-size:26px;font-weight:600}
+  header p{color:var(--dim);font-size:14px;margin-top:4px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  .lvl{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .lvl h3{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:14px}
+  .lvl .big{font-size:40px;font-weight:800;line-height:1}
+  .lvl .big small{font-size:15px;color:var(--dim);font-weight:500}
+  .bar{height:9px;background:#0c1018;border-radius:6px;margin:14px 0 6px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:6px}
+  .lvl .lbl{font-size:12.5px;color:var(--dim)}
+  .lvl1 .big,.lvl1 .bar i{color:var(--red)}.lvl1 .bar i{background:var(--red)}
+  .lvl2 .big,.lvl2 .bar i{color:var(--warn)}.lvl2 .bar i{background:var(--warn)}
+  .lvl3 .big,.lvl3 .bar i{color:var(--blue)}.lvl3 .bar i{background:var(--blue)}
+  h2{font-family:'Fraunces',serif;font-size:20px;margin:38px 0 14px}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:12px 16px;font-size:14px;border-bottom:1px solid var(--line)}
+  th{color:var(--dim);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  tr:last-child td{border-bottom:none}
+  .pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:600;margin-right:4px}
+  .p1{background:#f8514922;color:#ff8a80}.p2{background:#f0883e22;color:#ffb27a}.p3{background:#4f8cff22;color:#9fc2ff}
+  .none{color:var(--green);font-weight:600}
+  .tools{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:38px}
+  .tools h2{margin:0 0 6px}
+  .tools p{color:var(--dim);font-size:13px;margin-bottom:14px}
+  .frm{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+  .frm label{display:block;font-size:12px;color:var(--dim);margin-bottom:5px}
+  .frm input,.frm select{background:#0c1018;border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Sora';font-size:14px}
+  .frm button{background:var(--blue);border:none;color:#fff;border-radius:8px;padding:10px 16px;font-weight:600;cursor:pointer;font-family:'Sora'}
+  .out{margin-top:14px;background:#0c1018;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:13px;color:#9fc2ff;word-break:break-all;min-height:20px}
+  .reset{float:right;background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:7px 13px;font-size:12px;cursor:pointer;font-family:'Sora'}
+  .reset:hover{border-color:var(--red);color:var(--red)}
+  .empty{color:var(--dim);font-style:italic;padding:18px;text-align:center}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <button class="reset" onclick="resetAll()">Reiniciar datos</button>
+  <h1>PhishLab · Panel de resultados</h1>
+  <p>Laboratorio de concientización · ITAM · mide conversión sin almacenar datos personales</p>
+</div></header>
+
+<div class="in">
+  <div class="grid" id="levels"></div>
+
+  <h2>Resultado por participante</h2>
+  <table id="participants">
+    <thead><tr><th>Participante</th><th>Niveles en los que “cayó”</th><th>Madurez real estimada</th></tr></thead>
+    <tbody><tr><td colspan="3" class="empty">Cargando…</td></tr></tbody>
+  </table>
+
+  <div class="tools">
+    <h2>Generador de enlaces por participante</h2>
+    <p>Crea un enlace único para cada persona. El token es anónimo; el nombre (opcional, solo nivel 3) viaja en la URL y NO se guarda en la base de datos.</p>
+    <div class="frm">
+      <div><label>Token anónimo</label><input id="g-token" placeholder="U-7F3A" value="U-001"></div>
+      <div><label>Nivel</label><select id="g-level"><option>1</option><option>2</option><option>3</option></select></div>
+      <div><label>Nombre (opcional, nivel 3)</label><input id="g-name" placeholder="Carlos"></div>
+      <div><button onclick="genLink()">Generar enlace</button></div>
+    </div>
+    <div class="out" id="g-out">Tu enlace aparecerá aquí…</div>
+  </div>
+
+  <h2>Actividad reciente</h2>
+  <table id="recent">
+    <thead><tr><th>Fecha</th><th>Participante</th><th>Nivel</th><th>Evento</th></tr></thead>
+    <tbody><tr><td colspan="4" class="empty">Cargando…</td></tr></tbody>
+  </table>
+</div>
+
+<script>
+  var MAT = {1:"Baja (cayó en lo trivial)",2:"Media",3:"Alta (solo cayó en lo sofisticado)"};
+  function pct(a,b){return b>0?Math.round(a/b*100):0;}
+
+  async function load(){
+    var r = await fetch('/api/stats'); var d = await r.json();
+
+    // Niveles
+    var byL = {1:{visited:0,submitted:0},2:{visited:0,submitted:0},3:{visited:0,submitted:0}};
+    (d.byLevel||[]).forEach(function(x){byL[x.level]={visited:+x.visited,submitted:+x.submitted};});
+    var names={1:"Nivel 1 · Genérico",2:"Nivel 2 · Urgencia",3:"Nivel 3 · Dirigido"};
+    var html="";
+    [1,2,3].forEach(function(l){var v=byL[l].visited,s=byL[l].submitted,p=pct(s,v);
+      html+='<div class="lvl lvl'+l+'"><h3>'+names[l]+'</h3>'+
+        '<div class="big">'+s+'<small> / '+v+' cayeron</small></div>'+
+        '<div class="bar"><i style="width:'+p+'%"></i></div>'+
+        '<div class="lbl">'+p+'% de conversión · '+v+' visitaron</div></div>';});
+    document.getElementById('levels').innerHTML=html;
+
+    // Participantes
+    var tb=document.querySelector('#participants tbody');
+    if(!d.byParticipant||!d.byParticipant.length){tb.innerHTML='<tr><td colspan="3" class="empty">Aún no hay datos. Comparte los enlaces y vuelve aquí.</td></tr>';}
+    else{tb.innerHTML=d.byParticipant.map(function(p){
+      var lv=p.submitted_levels||[];
+      var pills=lv.length?lv.map(function(l){return '<span class="pill p'+l+'">Nivel '+l+'</span>';}).join(''):'<span class="none">No cayó en ninguno ✓</span>';
+      var mat=p.max_submitted_level?MAT[p.max_submitted_level]:"Alta (no cayó)";
+      return '<tr><td>'+p.token+'</td><td>'+pills+'</td><td>'+mat+'</td></tr>';
+    }).join('');}
+
+    // Reciente
+    var rb=document.querySelector('#recent tbody');
+    if(!d.recent||!d.recent.length){rb.innerHTML='<tr><td colspan="4" class="empty">Sin actividad todavía.</td></tr>';}
+    else{rb.innerHTML=d.recent.map(function(e){
+      var dt=new Date(e.created_at).toLocaleString('es-MX');
+      var ev=e.type==='submit'?'<span class="pill p1">Envió (cayó)</span>':'Visitó';
+      return '<tr><td>'+dt+'</td><td>'+e.token+'</td><td>Nivel '+e.level+'</td><td>'+ev+'</td></tr>';
+    }).join('');}
+  }
+
+  function genLink(){
+    var t=encodeURIComponent(document.getElementById('g-token').value||'U-001');
+    var l=document.getElementById('g-level').value;
+    var n=document.getElementById('g-name').value.trim();
+    var url=location.origin+'/n'+l+'?u='+t;
+    if(l==='3'&&n)url+='&n='+encodeURIComponent(n);
+    document.getElementById('g-out').textContent=url;
+  }
+
+  async function resetAll(){
+    if(!confirm('¿Borrar todos los eventos registrados?'))return;
+    await fetch('/api/reset',{method:'POST'});load();
+  }
+
+  load(); setInterval(load,5000);
+</script>
+</body>
+</html>

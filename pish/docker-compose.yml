@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: phish_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-phish}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-phish_local_only}
+      POSTGRES_DB: ${POSTGRES_DB:-phishlab}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-phish} -d ${POSTGRES_DB:-phishlab}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    # No exponemos el puerto de la BD al exterior: solo la red interna de Docker.
+
+  app:
+    build: ./app
+    container_name: phish_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgres://${POSTGRES_USER:-phish}:${POSTGRES_PASSWORD:-phish_local_only}@db:5432/${POSTGRES_DB:-phishlab}
+    ports:
+      # Solo escucha en localhost (127.0.0.1). NO se publica a la red.
+      - "127.0.0.1:3000:3000"
+
+volumes:
+  db_data:
