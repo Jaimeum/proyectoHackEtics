@@ -12,6 +12,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { Pool } = require('pg');
+const { randomUUID } = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -52,14 +53,23 @@ function escapeHtml(str) {
 }
 
 // ---------------------------------------------------------------------
-// Servir una campana, inyectando token / nivel / nombre en el HTML
+// Servir una campana, inyectando token / nivel / nombre en el HTML.
+// Si no viene ?u=, se genera un UUID y se redirige para que el token
+// quede en la URL (permite compartir un solo link para todos).
 // ---------------------------------------------------------------------
 function serveCampaign(level) {
   return (req, res) => {
+    if (!req.query.u) {
+      const newToken = randomUUID().replace(/-/g, '').slice(0, 24);
+      const dest = new URL(`${req.protocol}://${req.get('host')}${req.path}`);
+      dest.searchParams.set('u', newToken);
+      return res.redirect(302, dest.pathname + dest.search);
+    }
+
     const file = path.join(__dirname, 'views', `nivel${level}.html`);
     let html = fs.readFileSync(file, 'utf8');
 
-    const token = escapeHtml((req.query.u || 'DEMO').slice(0, 24));
+    const token = escapeHtml(req.query.u.slice(0, 24));
     const name = escapeHtml((req.query.n || '').slice(0, 40));
 
     html = html

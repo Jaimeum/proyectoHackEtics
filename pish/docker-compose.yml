@@ -27,8 +27,10 @@ services:
       PORT: 3000
       DATABASE_URL: postgres://${POSTGRES_USER:-phish}:${POSTGRES_PASSWORD:-phish_local_only}@db:5432/${POSTGRES_DB:-phishlab}
     ports:
-      # Solo escucha en localhost (127.0.0.1). NO se publica a la red.
-      - "127.0.0.1:3000:3000"
+      - "3000:3000"
+    volumes:
+      - ./app/views:/app/views
+      - ./app/public:/app/public
 
 volumes:
   db_data:
